@@ -1,6 +1,9 @@
 package entidades;
 import java.util.Calendar;
 
+/**
+* Clase que define a un chofer
+*/
 public class Chofer extends Asociado{
     private static int choferCount;
     public static String fileName = "ChoferData.csv";
@@ -8,11 +11,17 @@ public class Chofer extends Asociado{
     "colonia", "municipio", "estado", "numeroExterior", "numeroInterior", "numLicencia", "fechaInicio"};
     private int choferId;
 
+    /**
+    * Constructor de la clase. Unicamente define el id del chofer
+    */
     public Chofer(){
         choferCount++;
         this.choferId = choferCount;
     }
 
+    /**
+    * Metodo personalizado para toString regresa el chofer en un formato amigable para CSV
+    */
     public String toString(){
         String prettyPrinted = "";
         for(String p : properties){
@@ -22,6 +31,12 @@ public class Chofer extends Asociado{
         return prettyPrinted;
     }
 
+    /**
+    * Regresa el valor de una propiedad en particular del chofer
+    * @param property La propiedad que se requiere
+    * @return Valor de la propiedad del chofer
+    * @throws IllegalArgumentException Si la propiedad no esta definida para chofer
+    */
     public String get(String property){
         switch (property){
             case "choferId":
@@ -57,6 +72,13 @@ public class Chofer extends Asociado{
         }
     }
 
+    /**
+    * Define el valor de una propiedad en particular del chofer
+    * @param property La propiedad que se requiere
+    * @param value El valor a definir
+    * @return El chofer con los datos editados
+    * @throws IllegalArgumentException Si la propiedad no esta definida para chofer
+    */
     public Chofer set(String property, String value){
         switch (property){
             case "nombre":
@@ -108,7 +130,19 @@ public class Chofer extends Asociado{
         return this;
     }
 
+    /**
+    * Define el indice para la tabla chofer
+    * @param index el nuevo indice
+    */
     public static void setTableIndex(int index){
         choferCount = index;
+    }
+
+    /**
+    * Regresa la cantidad de choferes creados
+    * @return La cantidad de choferes creados
+    */
+    public static int getCount(){
+        return choferCount;
     }
 }

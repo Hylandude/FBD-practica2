@@ -1,5 +1,10 @@
 package entidades;
 
+
+/**
+* Clase que define los campos de una persona
+* @see Asociado
+*/
 public abstract class Persona{
     protected String nombre;
     protected String apellidoMaterno;

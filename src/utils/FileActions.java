@@ -5,7 +5,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+* Clase que define metodos que operan sobre archivos
+*/
 public class FileActions{
+
+    /**
+    * Crea o verifica los archivos necesarios para la ejecución del programa
+    * @return estado de la operacion
+    */
     public static boolean createFiles(){
         try {
             File index = new File("tableIndex.csv");
@@ -38,15 +46,15 @@ public class FileActions{
                 System.out.println("DueñoData file already exists.");
             }
 
-            /*File dueño = new File("DueñoData.csv");
-            if (dueño.createNewFile()) {
-                FileWriter dueñoWriter = new FileWriter("DueñoData.csv");
-                dueñoWriter.write("dueñoId,nombre,apellidoMaterno,apellidoPaterno,foto,email,calle,colonia,municipio,estado,numeroExterior,numeroInterior,numLicencia,fechaInicio,RFC");
-                dueñoWriter.close();
-                System.out.println("File created: " + dueño.getName());
+            File taxi = new File("TaxiData.csv");
+            if (taxi.createNewFile()) {
+                FileWriter taxiWriter = new FileWriter("TaxiData.csv");
+                taxiWriter.write("taxiId,año,numPuertas,numCilindros,marca,modelo,tieneRefaccion\n");
+                taxiWriter.close();
+                System.out.println("File created: " + taxi.getName());
             }else{
-                System.out.println("DueñoData file already exists.");
-            }*/
+                System.out.println("TaxiData file already exists.");
+            }
 
             return true;
         }catch (IOException e){
@@ -54,7 +62,10 @@ public class FileActions{
             return false;
         }
     }
-
+    /**
+    * Define los indices para las instancias de cada clase
+    * @return estado de la operacion
+    */
     public static boolean setTableIndex(){
         try{
             File index = new File("tableIndex.csv");
@@ -64,7 +75,7 @@ public class FileActions{
 
             Chofer.setTableIndex(Integer.parseInt(indexData[0]));
             Dueño.setTableIndex(Integer.parseInt(indexData[1]));
-            //Taxi.setTableIndex(Integer.parseInt(indexData[2]));
+            Taxi.setTableIndex(Integer.parseInt(indexData[2]));
             indexReader.close();
             return true;
         }catch(IOException e){
@@ -73,6 +84,12 @@ public class FileActions{
         }
     }
 
+    /**
+    * Agrega una linea a un archivo
+    * @param data Datos a escribir
+    * @param fileName Nombre del archivo donde se va a escribir
+    * @return estado de la operacion
+    */
     public static boolean appendToTable(String data, String fileName){
         try{
             File table = new File(fileName);
@@ -86,6 +103,11 @@ public class FileActions{
         }
     }
 
+    /**
+    * Elimina todas las entradas de una tabla
+    * @param tableName Nombre de la tabla a elimiar
+    * @return estado de la operacion
+    */
     public static boolean dropTable(String tableName){
         try{
             String[] properties;
@@ -96,9 +118,9 @@ public class FileActions{
                 case "Dueño":
                     properties = Dueño.properties;
                     break;
-                /*case "Taxi":
+                case "Taxi":
                     properties = Taxi.properties;
-                    break;*/
+                    break;
                 default:
                     throw new IOException("Invalid table name");
             }
@@ -118,6 +140,11 @@ public class FileActions{
         }
     }
 
+    /**
+    * Muestra todas las entradas de una tabla
+    * @param tableName Nombre de la tabla a mostrar
+    * @return estado de la operacion
+    */
     public static boolean showTable(String tableName){
         try{
             File table = new File(tableName+"Data.csv");
@@ -133,6 +160,13 @@ public class FileActions{
         }
     }
 
+    /**
+    * Edita una de las entradas de una tabla
+    * @param tableName Nombre de la tabla a elimiar
+    * @param newData Datos actualizados de la entrada
+    * @param id Id del elemento a actualizar
+    * @return estado de la operacion
+    */
     public static boolean editEntry(String tableName, String newData, int id){
         try{
             File table = new File(tableName+"Data.csv");
@@ -169,6 +203,12 @@ public class FileActions{
         }
     }
 
+    /**
+    * Borra una de las entradas de una tabla
+    * @param tableName Nombre de la tabla a elimiar
+    * @param id Id del elemento a actualizar
+    * @return estado de la operacion
+    */
     public static boolean destroyEntry(String tableName, int id){
         try{
             File table = new File(tableName+"Data.csv");
@@ -200,6 +240,24 @@ public class FileActions{
 
         }catch(IOException e){
             e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+    * Guarda los indices de las tablas en un archivo para que haya persistencia al cargar el programa de nuevo
+    * @param choferIndex indice de la tabla chofer
+    * @param dueñoIndex indice de la tabla dueño
+    * @param taxiIndex indice de la tabla taxi
+    * @return estado de la operacion
+    */
+    public static boolean saveIndex(int choferIndex, int dueñoIndex, int taxiIndex){
+        try{
+            FileWriter indexWriter = new FileWriter("tableIndex.csv");
+            indexWriter.write("chofer,dueño,taxi\n"+choferIndex+","+dueñoIndex+","+taxiIndex);
+            indexWriter.close();
+            return true;
+        }catch(IOException e){
             return false;
         }
     }

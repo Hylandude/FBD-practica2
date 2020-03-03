@@ -1,6 +1,9 @@
 package entidades;
 import java.util.Calendar;
 
+/**
+* Clase que define a un dueño
+*/
 public class Dueño extends Asociado{
     private static int dueñoCount;
     public static String fileName = "DueñoData.csv";
@@ -9,11 +12,17 @@ public class Dueño extends Asociado{
     private int dueñoId;
     private String RFC;
 
+    /**
+    * Constructor de la clase. Unicamente define el id del dueño
+    */
     public Dueño(){
         dueñoCount++;
         this.dueñoId = dueñoCount;
     }
 
+    /**
+    * Metodo personalizado para toString regresa el dueño en un formato amigable para CSV
+    */
     public String toString(){
         String prettyPrinted = "";
         for(String p : properties){
@@ -23,6 +32,12 @@ public class Dueño extends Asociado{
         return prettyPrinted;
     }
 
+    /**
+    * Regresa el valor de una propiedad en particular del dueño
+    * @param property La propiedad que se requiere
+    * @return Valor de la propiedad del dueño
+    * @throws IllegalArgumentException Si la propiedad no esta definida para dueño
+    */
     public String get(String property){
         switch (property){
             case "dueñoId":
@@ -60,6 +75,13 @@ public class Dueño extends Asociado{
         }
     }
 
+    /**
+    * Define el valor de una propiedad en particular del dueño
+    * @param property La propiedad que se requiere
+    * @param value El valor a definir
+    * @return El dueño con los datos editados
+    * @throws IllegalArgumentException Si la propiedad no esta definida para dueño
+    */
     public Dueño set(String property, String value){
         switch (property){
             case "nombre":
@@ -114,7 +136,19 @@ public class Dueño extends Asociado{
         return this;
     }
 
+    /**
+    * Define el indice para la tabla dueño
+    * @param index el nuevo indice
+    */
     public static void setTableIndex(int index){
         dueñoCount = index;
+    }
+
+    /**
+    * Regresa la cantidad de dueños creados
+    * @return La cantidad de dueños creados
+    */
+    public static int getCount(){
+        return dueñoCount;
     }
 }
